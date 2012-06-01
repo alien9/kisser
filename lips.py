@@ -10,6 +10,8 @@ from PyQt4 import QtCore, QtGui
 from kisser import Ui_MainWindow
 from PyQt4.QtGui import *
 from PIL import Image, ImageDraw
+from PIL.ImageQt import ImageQt
+import barulho
 
 class StartQT4(QtGui.QMainWindow):
     def __init__(self, parent=None):
@@ -67,18 +69,29 @@ class Loop(QtCore.QThread):
             #cv.ClearMemStorage(storage)
             # equalize histogram
             cv.EqualizeHist(grayscale, grayscale)
+            image=array2PIL(rgb, (640, 480))
+            #image=numpy2qimage(rgb)
             
             faces = cv.HaarDetectObjects(grayscale, haar, storage, 1.2, 2, cv.CV_HAAR_DO_CANNY_PRUNING, (50, 50))
-            print faces
-            image=array2PIL(rgb, (640, 480))
-            
-            #image=numpy2qimage(rgb)
             if faces:
                 draw=ImageDraw.Draw(image)
                 for face in faces:
                     print face
-                    draw.rectangle(face[0], fill="green")   
-            qi=PILimageToQImage(image)
+                    r=face[0]
+                    draw.rectangle((r[0], r[1],  r[0]+r[2],  r[1]+r[3]), outline="green")
+                    barulho.toca("sweep1.mp3")
+            cv.Flip(grayscale, grayscale, 1)
+            faces = cv.HaarDetectObjects(grayscale, haar, storage, 1.2, 2, cv.CV_HAAR_DO_CANNY_PRUNING, (50, 50))
+            if faces:
+                draw=ImageDraw.Draw(image)
+                for face in faces:
+                    print face
+                    r=face[0]
+                    draw.rectangle((640-r[0], 480-r[1],  640-r[0]+r[2],  480-r[1]+r[3]), outline="yellow")
+                    barulho.toca("sweep_medium.mp3")
+            
+            
+            qi=ImageQt(image) #PILimageToQImage(image)
             self.emit(QtCore.SIGNAL('update(QImage)'), qi)
         return
 
