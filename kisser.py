@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'kisser.ui'
 #
-# Created: Fri Jun  1 05:40:35 2012
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Tue Jun  5 14:08:56 2012
+#      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -47,6 +47,7 @@ class Ui_MainWindow(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
         MainWindow.setPalette(palette)
+        MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Nivea Lips", None, QtGui.QApplication.UnicodeUTF8))
         MainWindow.setLayoutDirection(QtCore.Qt.LeftToRight)
         MainWindow.setAutoFillBackground(False)
         self.centralwidget = QtGui.QWidget(MainWindow)
@@ -71,33 +72,19 @@ class Ui_MainWindow(object):
         self.label.setSizePolicy(sizePolicy)
         self.label.setMaximumSize(QtCore.QSize(640, 480))
         self.label.setAutoFillBackground(False)
+        self.label.setText(_fromUtf8(""))
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName(_fromUtf8("label"))
         self.verticalLayout.addWidget(self.label)
         self.gridLayout.addLayout(self.verticalLayout, 0, 0, 2, 1)
-        self.pushButton = QtGui.QPushButton(self.centralwidget)
-        self.pushButton.setObjectName(_fromUtf8("pushButton"))
-        self.gridLayout.addWidget(self.pushButton, 2, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.actionLoad = QtGui.QAction(MainWindow)
+        self.actionLoad.setText(QtGui.QApplication.translate("MainWindow", "load", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLoad.setObjectName(_fromUtf8("actionLoad"))
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Nivea Lips", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("MainWindow", "debug", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton.setText(QtGui.QApplication.translate("MainWindow", "ok", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionLoad.setText(QtGui.QApplication.translate("MainWindow", "load", None, QtGui.QApplication.UnicodeUTF8))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtGui.QApplication(sys.argv)
-    MainWindow = QtGui.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+        pass
 

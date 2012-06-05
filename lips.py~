@@ -35,6 +35,8 @@ class StartQT4(QtGui.QMainWindow):
         #values=self.sozinho()
         #self.trick()
         self.loop=Loop(True)
+        but=self.ui.pushButton
+        but.clicked.connect(self.sozinho)
         self.label.setScaledContents(True) 
     def keyPressEvent(self, e):
         print e.key()

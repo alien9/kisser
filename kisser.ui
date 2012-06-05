@@ -151,7 +151,7 @@
          <bool>false</bool>
         </property>
         <property name="text">
-         <string>debug</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -159,13 +159,6 @@
        </widget>
       </item>
      </layout>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>ok</string>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>
