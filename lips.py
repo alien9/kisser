@@ -28,7 +28,7 @@ class StartQT4(QtGui.QMainWindow):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         self.ui = Ui_MainWindow()
-        self.setWindowState(Qt.WindowFullScreen)
+        #self.setWindowState(Qt.WindowFullScreen)
         self.setWindowIcon(QtGui.QIcon('logo.png'))
         self.ui.setupUi(self)
         self.label = self.ui.label
@@ -126,25 +126,21 @@ class Loop(QtCore.QThread):
             right=None
             if faces:
                 draw=ImageDraw.Draw(image)
-                for face in faces:
-                    #print "left"
-                    #print face
-                    r=face[0]
-                    draw.rectangle((r[0], r[1],  r[0]+r[2],  r[1]+r[3]), outline="green")
-                    left=(r[0]+r[2]/2, r[1]+r[3]/2)
-                    #barulho.toca("sweep1.mp3")
+                #for face in faces:
+                face=faces[0]
+                r=face[0]
+                draw.rectangle((r[0], r[1],  r[0]+r[2],  r[1]+r[3]), outline="green")
+                left=(r[0]+r[2]/2, r[1]+r[3]/2)
             if not self.solo:
                 cv.Flip(grayscale, grayscale, 1)
                 faces = cv.HaarDetectObjects(grayscale, haar, storage, 1.1, 2, cv.CV_HAAR_DO_CANNY_PRUNING, (30, 30))
                 if faces:
                     draw=ImageDraw.Draw(image)
-                    for face in faces:
-                        #print "right"
-                        #print face
-                        r=face[0]
-                        draw.rectangle((640-r[0]-r[2], r[1],  640-r[0], r[1]+r[3]), outline="yellow")
-                        right=(640-r[0]-r[2]/2, r[1]+r[3]/2)
-                        #barulho.toca("sweep_medium.mp3")
+                    #for face in faces:
+                    face=faces[0]
+                    r=face[0]
+                    draw.rectangle((640-r[0]-r[2], r[1],  640-r[0], r[1]+r[3]), outline="yellow")
+                    right=(640-r[0]-r[2]/2, r[1]+r[3]/2)
             else:
                 right=left
             if left and right:

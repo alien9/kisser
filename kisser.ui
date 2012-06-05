@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>982</width>
-    <height>611</height>
+    <width>827</width>
+    <height>943</height>
    </rect>
   </property>
   <property name="palette">
@@ -34,9 +34,9 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>32</red>
-        <green>42</green>
-        <blue>223</blue>
+        <red>7</red>
+        <green>59</green>
+        <blue>132</blue>
        </color>
       </brush>
      </colorrole>
@@ -63,9 +63,9 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>32</red>
-        <green>42</green>
-        <blue>223</blue>
+        <red>7</red>
+        <green>59</green>
+        <blue>132</blue>
        </color>
       </brush>
      </colorrole>
@@ -83,18 +83,18 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>32</red>
-        <green>42</green>
-        <blue>223</blue>
+        <red>7</red>
+        <green>59</green>
+        <blue>132</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>32</red>
-        <green>42</green>
-        <blue>223</blue>
+        <red>7</red>
+        <green>59</green>
+        <blue>132</blue>
        </color>
       </brush>
      </colorrole>
@@ -126,35 +126,52 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>logo.jpg</pixmap>
+         <pixmap>maquina.png</pixmap>
         </property>
         <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <set>Qt::AlignHCenter|Qt::AlignTop</set>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>640</width>
-          <height>480</height>
-         </size>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>320</width>
+            <height>240</height>
+           </size>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_3">
         <property name="text">
          <string/>
         </property>
+        <property name="pixmap">
+         <pixmap>nodia.png</pixmap>
+        </property>
         <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
         </property>
        </widget>
       </item>
