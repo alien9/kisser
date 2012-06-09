@@ -73,8 +73,8 @@ class StartQT4(QtGui.QMainWindow):
             self.loop.wakeup()
     def setKinect(self,kinect):
         if kinect:
-            self.ui.webView.setMinimumSize(QtCore.QSize(0, 480))
-            self.ui.webView.setMaximumSize(QtCore.QSize(0, 480))
+            self.ui.webView.setMinimumSize(QtCore.QSize(647, 694))
+            self.ui.webView.setMaximumSize(QtCore.QSize(647, 694))
             self.label.setMinimumSize(QtCore.QSize(640, 480))
             self.label.setMaximumSize(QtCore.QSize(640, 480))
 
