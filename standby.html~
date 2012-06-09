@@ -6,7 +6,7 @@
 		<style type="text/css" media="screen">
 		html, body { height:100%; background-color: #003366;}
 		body { margin:0; padding:0; overflow:hidden; }
-		#flashContent { width:100%; height:100%; }
+		#flashContente { width:100%; height:100%; }
 		</style>
 	</head>
 	<body>

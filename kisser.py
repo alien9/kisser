@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'kisser.ui'
 #
-# Created: Sat Jun  9 16:30:22 2012
+# Created: Sat Jun  9 19:35:28 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(827, 943)
+        MainWindow.resize(1050, 1680)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -51,27 +51,8 @@ class Ui_MainWindow(object):
         MainWindow.setAutoFillBackground(False)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
-        self.gridLayout = QtGui.QGridLayout(self.centralwidget)
-        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
-        self.verticalLayout = QtGui.QVBoxLayout()
-        self.verticalLayout.setSizeConstraint(QtGui.QLayout.SetNoConstraint)
-        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.horizontalLayout = QtGui.QHBoxLayout()
-        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label = QtGui.QLabel(self.centralwidget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setMinimumSize(QtCore.QSize(0, 0))
-        self.label.setMaximumSize(QtCore.QSize(0, 0))
-        self.label.setAutoFillBackground(True)
-        self.label.setText(_fromUtf8(""))
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setObjectName(_fromUtf8("label"))
-        self.horizontalLayout.addWidget(self.label)
         self.webView = QtWebKit.QWebView(self.centralwidget)
+        self.webView.setGeometry(QtCore.QRect(190, 780, 640, 480))
         self.webView.setMinimumSize(QtCore.QSize(640, 480))
         self.webView.setMaximumSize(QtCore.QSize(640, 480))
         palette = QtGui.QPalette()
@@ -103,15 +84,25 @@ class Ui_MainWindow(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Shadow, brush)
         self.webView.setPalette(palette)
+        self.webView.setStyleSheet(_fromUtf8("QWebView{ position:absolute;\n"
+"top:600px;\n"
+"}"))
         self.webView.setUrl(QtCore.QUrl(_fromUtf8("about:blank")))
         self.webView.setObjectName(_fromUtf8("webView"))
-        self.horizontalLayout.addWidget(self.webView)
-        self.verticalLayout.addLayout(self.horizontalLayout)
-        self.gridLayout.addLayout(self.verticalLayout, 1, 0, 2, 1)
-        self.horizontalLayout_3 = QtGui.QHBoxLayout()
-        self.horizontalLayout_3.setContentsMargins(-1, 21, -1, 22)
-        self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
+        self.label = QtGui.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(205, 830, 640, 480))
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
+        self.label.setMinimumSize(QtCore.QSize(640, 480))
+        self.label.setMaximumSize(QtCore.QSize(640, 480))
+        self.label.setText(_fromUtf8(""))
+        self.label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.label.setObjectName(_fromUtf8("label"))
         self.label_2 = QtGui.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(356, 1450, 338, 96))
         self.label_2.setMinimumSize(QtCore.QSize(338, 96))
         self.label_2.setMaximumSize(QtCore.QSize(338, 96))
         palette = QtGui.QPalette()
@@ -157,13 +148,11 @@ class Ui_MainWindow(object):
         font.setPointSize(28)
         self.label_2.setFont(font)
         self.label_2.setAutoFillBackground(True)
+        self.label_2.setText(_fromUtf8(""))
         self.label_2.setPixmap(QtGui.QPixmap(_fromUtf8("boca.jpg")))
+        self.label_2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label_2.setMargin(22)
         self.label_2.setObjectName(_fromUtf8("label_2"))
-        self.horizontalLayout_3.addWidget(self.label_2)
-        self.gridLayout.addLayout(self.horizontalLayout_3, 3, 0, 1, 1)
-        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.gridLayout.addItem(spacerItem, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.actionLoad = QtGui.QAction(MainWindow)
         self.actionLoad.setObjectName(_fromUtf8("actionLoad"))
@@ -173,17 +162,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Nivea Lips", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("MainWindow", "00000000", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLoad.setText(QtGui.QApplication.translate("MainWindow", "load", None, QtGui.QApplication.UnicodeUTF8))
 
 from PyQt4 import QtWebKit
-
-if __name__ == "__main__":
-    import sys
-    app = QtGui.QApplication(sys.argv)
-    MainWindow = QtGui.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
-

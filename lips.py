@@ -28,15 +28,14 @@ class StartQT4(QtGui.QMainWindow):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         self.ui = Ui_MainWindow()
-        #self.setWindowState(Qt.WindowFullScreen)
+        self.setWindowState(Qt.WindowFullScreen)
         self.setWindowIcon(QtGui.QIcon('logo.png'))
         self.ui.setupUi(self)
-        #self.ui.setPixmap('sistema_detecta.jpg')
-        self.setStyleSheet("QMainWindow {font-size : 400px; color : blue; background-image: url('sistema_detecta.jpg'); background-repeat:no-repeat;} \n QLabel#label_2 {background-image: url('boca.jpg')}");
+        self.setStyleSheet("QMainWindow {font-size : 400px; color : blue; background-image: url('sistema_detecta_1680.jpg'); background-repeat:no-repeat;} \n QLabel#label_2 {background-image: url('boca.jpg')}");
         webview=self.ui.webView
         websettings = webview.settings()
         websettings.setAttribute(QtWebKit.QWebSettings.PluginsEnabled,True)
-        webview.load(QUrl('http://localhost/~tiago/works/nivea/standby.html'))
+        webview.load(QUrl('file:///home/tiago/kisser/standby.html'))
         webview.setAttribute(Qt.WA_TranslucentBackground)
         # Works with and without that following line
         webview.setAttribute(Qt.WA_OpaquePaintEvent, False)
@@ -49,40 +48,52 @@ class StartQT4(QtGui.QMainWindow):
         #values=self.sozinho()
         #self.trick()
         self.loop=Loop(True)
-        self.label.setScaledContents(True) 
+        self.label.setScaledContents(True)
+        self.setKinect(False)
+        self.lazy=False
+
     def keyPressEvent(self, e):
         k=e.key()
         print e.key()
-        if k == QtCore.Qt.Key_Escape or k==16777227:
+        if k == QtCore.Qt.Key_Escape or k==16777227 or k==16777222 or k==48: # ESC ou Zero ou Ins (Tecladinho) - pare tudo e volte 
             self.loop.stop()
-            #self.close()
             self.setKinect(False)
-        if k==16777221 or k==16777220: # ENTER
+        if k==16777221 or k==16777220: # ENTER pergunta o que fazer
             self.sozinho()
-        if k==45: # -
+        if k==45: # '-', tira a foto sem cerimonias
             self.sarva(3)
-        if k==16777233 or k==49: #so
+        if k==16777233 or k==49: #so - 1 no tecladinho
             self.setKinect(True)
             self.loop.stop()
             self.trick(True)
-        if k==16777237 or k==50: #acompanhado
+        if k==16777237 or k==50: #acompanhado- 2 no tecladinho
             self.setKinect(True)
             self.loop.stop()
             self.trick(False)
-        if k==32 or k==42: # '*', comece a disparar...
+        if k==32 or k==42: # '*' ou ESPACO, comece a disparar...
             self.loop.wakeup()
+            self.ui.label_2.setMinimumSize(QtCore.QSize(0, 96))
+            self.ui.label_2.setMaximumSize(QtCore.QSize(0, 96))
+            self.ui.label_2.setText("")
     def setKinect(self,kinect):
+        self.lazy=False
         if kinect:
-            self.ui.webView.setMinimumSize(QtCore.QSize(647, 694))
-            self.ui.webView.setMaximumSize(QtCore.QSize(647, 694))
+            self.ui.webView.setHtml('')
+            self.ui.webView.setMinimumSize(QtCore.QSize(0, 480))
+            self.ui.webView.setMaximumSize(QtCore.QSize(0, 480))
             self.label.setMinimumSize(QtCore.QSize(640, 480))
             self.label.setMaximumSize(QtCore.QSize(640, 480))
-
+            self.ui.label_2.setMinimumSize(QtCore.QSize(0, 96))
+            self.ui.label_2.setMaximumSize(QtCore.QSize(0, 96))
         else:
             self.label.setMinimumSize(QtCore.QSize(0, 480))
             self.label.setMaximumSize(QtCore.QSize(0, 480))
-            self.ui.webView.setMinimumSize(QtCore.QSize(640, 480))
-            self.ui.webView.setMaximumSize(QtCore.QSize(640, 480))       
+            self.ui.webView.setMinimumSize(QtCore.QSize(640, 694))
+            self.ui.webView.setMaximumSize(QtCore.QSize(640, 694))
+            self.ui.webView.load(QUrl('file:///home/tiago/kisser/standby.html'))
+            self.ui.label_2.setMinimumSize(QtCore.QSize(0, 0))
+            self.ui.label_2.setMaximumSize(QtCore.QSize(0, 0))
+            self.ui.label_2.setText("")
     def sozinho(self):
         self.loop.stop()
         dlg = StartSub2(self)
@@ -91,14 +102,14 @@ class StartQT4(QtGui.QMainWindow):
     def photo(self, a, b):
         self.loop.refresh(a, b)
     def update(self,  pic):
+        if self.lazy:
+            return
         pix=QPixmap.fromImage(pic)
         
         self.label.setPixmap(pix)
     def trick(self, solo):
         storage = cv.CreateMemStorage()
-        #self.ui.label_2.setMinimumSize(QtCore.QSize(0, 96))
-        #self.ui.label_2.setMaximumSize(QtCore.QSize(0, 96))
-        self.ui.label_2.setText("")
+
         haar=cv.Load('haarcascades/haarcascade_profileface.xml')
         self.loop=Loop(solo)
         self.connect(self.loop,  QtCore.SIGNAL('update(QImage)'),  self.update)
@@ -115,17 +126,21 @@ class StartQT4(QtGui.QMainWindow):
             s=re.search("_(\d+)_", files[len(files)-1])
             if s:
                 u=1+int(s.group(1))
-        for i in range(0,veces):
-            cc = cv.QueryFrame(capture)
-            cv.SaveImage("output/photo_"+str('%05d' % u)+"_"+str(int(time.time()))+".png",cc)
-            time.sleep(1)
-            barulho.toca("camera.mp3")
-        self.ui.label_2.setText(str('%05d' % u))
+        self.ui.label_2.setText(str('%07d' % u))
         self.ui.label_2.setMinimumSize(QtCore.QSize(338, 96))
         self.ui.label_2.setMaximumSize(QtCore.QSize(338, 96))
+        tf=""
+        for i in range(0,veces):
+            cc = cv.QueryFrame(capture)
+            tf="output/photo_"+str('%05d' % u)+"_"+str(int(time.time()))+".png"
+            cv.SaveImage(tf,cc)
+            time.sleep(1)
+            barulho.toca("camera.mp3")
         call(["eject","/dev/sr0"])
         call(["eject","-t","/dev/sr0"])
-        self.trick(True)
+        self.lazy=True
+        self.label.setPixmap(QPixmap(tf))        
+        #self.trick(True)
 class Loop(QtCore.QThread):
     def __init__(self, solo):
         self.solo=solo
@@ -180,7 +195,7 @@ class Loop(QtCore.QThread):
                         if face[1] > threshold:
                         #face=faces[0]
                             r=face[0]
-                            i=face[0]
+                            #i=face[0]
                             #draw.rectangle((r[0], r[1],  r[0]+r[2],  r[1]+r[3]), outline="green")
                             #cv.Rectangle(o, ( int(r[0]), int(r[1])),
                             #         (int(r[0]+r[2]), int(r[1]+r[3])),
@@ -197,7 +212,7 @@ class Loop(QtCore.QThread):
                         #draw=ImageDraw.Draw(image)
                         for face in faces:
                             if face[1] > threshold:
-                                face=faces[0]
+                                #face=faces[0]
                                 r=face[0]
                                 cv.Circle(o, (int(640-r[0]-r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 50, 50), 3, 8, 0)
                                 #draw.rectangle((640-r[0]-r[2], r[1],  640-r[0], r[1]+r[3]), outline="yellow")
@@ -216,7 +231,6 @@ class Loop(QtCore.QThread):
                         if not self.solo:
                             heat+=10
                         if heat>10:
-                        #barulho.toca("sweep1.mp3")
                             self.emit(QtCore.SIGNAL('save()'))
                             return
                 else:
