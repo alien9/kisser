@@ -32,7 +32,7 @@ class StartQT4(QtGui.QMainWindow):
         self.setWindowIcon(QtGui.QIcon('logo.png'))
         self.ui.setupUi(self)
         #self.ui.setPixmap('sistema_detecta.jpg')
-        self.setStyleSheet("QMainWindow {font-size : 400px; color : blue; background-image: url('sistema_detecta.jpg'); background-repeat:no-repeat;}");
+        self.setStyleSheet("QMainWindow {font-size : 400px; color : blue; background-image: url('sistema_detecta.jpg'); background-repeat:no-repeat;} \n QLabel#label_2 {background-image: url('boca.jpg')}");
         webview=self.ui.webView
         websettings = webview.settings()
         websettings.setAttribute(QtWebKit.QWebSettings.PluginsEnabled,True)
@@ -96,6 +96,9 @@ class StartQT4(QtGui.QMainWindow):
         self.label.setPixmap(pix)
     def trick(self, solo):
         storage = cv.CreateMemStorage()
+        #self.ui.label_2.setMinimumSize(QtCore.QSize(0, 96))
+        #self.ui.label_2.setMaximumSize(QtCore.QSize(0, 96))
+        self.ui.label_2.setText("")
         haar=cv.Load('haarcascades/haarcascade_profileface.xml')
         self.loop=Loop(solo)
         self.connect(self.loop,  QtCore.SIGNAL('update(QImage)'),  self.update)
@@ -117,6 +120,9 @@ class StartQT4(QtGui.QMainWindow):
             cv.SaveImage("output/photo_"+str('%05d' % u)+"_"+str(int(time.time()))+".png",cc)
             time.sleep(1)
             barulho.toca("camera.mp3")
+        self.ui.label_2.setText(str('%05d' % u))
+        self.ui.label_2.setMinimumSize(QtCore.QSize(338, 96))
+        self.ui.label_2.setMaximumSize(QtCore.QSize(338, 96))
         call(["eject","/dev/sr0"])
         call(["eject","-t","/dev/sr0"])
         self.trick(True)
@@ -179,7 +185,7 @@ class Loop(QtCore.QThread):
                             #cv.Rectangle(o, ( int(r[0]), int(r[1])),
                             #         (int(r[0]+r[2]), int(r[1]+r[3])),
                             #         cv.RGB(0, 255, 0), 3, 8, 0)
-                            cv.Circle(o, (int(r[0]+r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(200, 0, 0), 3, 8, 0)
+                            cv.Circle(o, (int(r[0]+r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 50, 50), 3, 8, 0)
                             #cv.EllipseBox(o, r, cv.RGB(0, 255, 0))
                             #draw.ellipse((r[0], r[1],  r[0]+r[2],  r[1]+r[3]), fill="green")
                             #draw.ellipse((r[0]+3, r[1]+3,  r[0]+r[2]-3,  r[1]+r[3]-3), fill=None)
@@ -189,12 +195,13 @@ class Loop(QtCore.QThread):
                     faces = cv.HaarDetectObjects(grayscale, haar, storage, 1.1, 2, cv.CV_HAAR_DO_CANNY_PRUNING, (30, 30))
                     if faces:
                         #draw=ImageDraw.Draw(image)
-                        #for face in faces:
-                        face=faces[0]
-                        r=face[0]
-                        cv.Circle(o, (int(640-r[0]-r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 50, 50), 3, 8, 0)
-                        #draw.rectangle((640-r[0]-r[2], r[1],  640-r[0], r[1]+r[3]), outline="yellow")
-                        right=(640-r[0]-r[2]/2, r[1]+r[3]/2)
+                        for face in faces:
+                            if face[1] > threshold:
+                                face=faces[0]
+                                r=face[0]
+                                cv.Circle(o, (int(640-r[0]-r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 50, 50), 3, 8, 0)
+                                #draw.rectangle((640-r[0]-r[2], r[1],  640-r[0], r[1]+r[3]), outline="yellow")
+                                right=(640-r[0]-r[2]/2, r[1]+r[3]/2)
                 else:
                     right=left
                 if left and right:
