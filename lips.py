@@ -142,6 +142,7 @@ class StartQT4(QtGui.QMainWindow):
             self.ui.webView.setMinimumSize(QtCore.QSize(640, 694))
             self.ui.webView.setMaximumSize(QtCore.QSize(640, 694))
             self.ui.webView.load(QUrl('file:///home/tiago/kisser/standby.html'))
+            self.ui.label.setPixmap(QPixmap("zero.png"))
             self.ui.label_2.setMinimumSize(QtCore.QSize(0, 0))
             self.ui.label_2.setMaximumSize(QtCore.QSize(0, 0))
             self.ui.label_2.setText("")
