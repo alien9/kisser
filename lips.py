@@ -146,8 +146,10 @@ class StartQT4(QtGui.QMainWindow):
             cv.SaveImage(tf,cc)
             time.sleep(1)
             barulho.toca("camera.mp3")
-        call(["eject","/dev/sr0"])
-        call(["eject","-t","/dev/sr0"])
+        #call(["eject","/dev/sr0"])
+        #call(["eject","-t","/dev/sr0"])
+        call(["eject","/dev/dvd1"])
+        call(["eject","-t","/dev/dvd1"])
         self.lazy=True
         self.label.setPixmap(QPixmap(tf))        
         #self.trick(True)

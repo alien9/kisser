@@ -216,7 +216,7 @@ class Loop(QtCore.QThread):
                             #cv.Rectangle(o, ( int(r[0]), int(r[1])),
                             #         (int(r[0]+r[2]), int(r[1]+r[3])),
                             #         cv.RGB(0, 255, 0), 3, 8, 0)
-                            cv.Circle(o, (int(r[0]+r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 50, 50), 3, 8, 0)
+                            cv.Circle(o, (int(r[0]+r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 255, 255), 3, 8, 0)
                             #cv.EllipseBox(o, r, cv.RGB(0, 255, 0))
                             #draw.ellipse((r[0], r[1],  r[0]+r[2],  r[1]+r[3]), fill="green")
                             #draw.ellipse((r[0]+3, r[1]+3,  r[0]+r[2]-3,  r[1]+r[3]-3), fill=None)
@@ -228,7 +228,7 @@ class Loop(QtCore.QThread):
                         for face in faces:
                             if face[1] > threshold:
                                 r=face[0]
-                                cv.Circle(o, (int(640-r[0]-r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 50, 50), 3, 8, 0)
+                                cv.Circle(o, (int(640-r[0]-r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 255, 255), 3, 8, 0)
                                 right=(640-r[0]-r[2]/2, r[1]+r[3]/2)
                 else:
                     right=left
