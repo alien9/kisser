@@ -32,7 +32,7 @@ class StartQT4(QtGui.QMainWindow):
         self.setWindowState(Qt.WindowFullScreen)
         self.setWindowIcon(QtGui.QIcon('logo.png'))
         self.ui.setupUi(self)
-        self.setStyleSheet("QMainWindow {font-size : 400px; color : blue; background-image: url('sistema_detecta_1680.jpg'); background-repeat:no-repeat;} \n QLabel#label_2 {background-image: url('boca.jpg')}");
+        self.setStyleSheet("QMainWindow {font-size : 400px; color : blue; background-image: url('sistema_detecta_1360.jpg'); background-repeat:no-repeat;} \n QLabel#label_2 {background-image: url('boca.jpg')}");
         webview=self.ui.webView
         websettings = webview.settings()
         websettings.setAttribute(QtWebKit.QWebSettings.PluginsEnabled,True)
@@ -146,8 +146,10 @@ class StartQT4(QtGui.QMainWindow):
             cv.SaveImage(tf,cc)
             time.sleep(1)
             barulho.toca("camera.mp3")
-        call(["eject","/dev/sr0"])
-        call(["eject","-t","/dev/sr0"])
+        #call(["eject","/dev/sr0"])
+        #call(["eject","-t","/dev/sr0"])
+        call(["eject","/dev/dvd1"])
+        call(["eject","-t","/dev/dvd1"])
         self.lazy=True
         self.label.setPixmap(QPixmap(tf))        
         #self.trick(True)

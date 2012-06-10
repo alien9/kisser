@@ -114,22 +114,22 @@
    <widget class="QWebView" name="webView">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>780</y>
-      <width>640</width>
-      <height>480</height>
+      <x>61</x>
+      <y>550</y>
+      <width>646</width>
+      <height>704</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>640</width>
-      <height>480</height>
+      <width>646</width>
+      <height>704</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>640</width>
-      <height>480</height>
+      <width>646</width>
+      <height>704</height>
      </size>
     </property>
     <property name="palette">
@@ -237,8 +237,8 @@ top:600px;
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>205</x>
-      <y>830</y>
+      <x>64</x>
+      <y>656</y>
       <width>640</width>
       <height>480</height>
      </rect>
@@ -262,8 +262,8 @@ top:600px;
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>356</x>
-      <y>1450</y>
+      <x>215</x>
+      <y>1180</y>
       <width>338</width>
       <height>96</height>
      </rect>
@@ -423,8 +423,8 @@ top:600px;
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>205</x>
-      <y>830</y>
+      <x>64</x>
+      <y>656</y>
       <width>640</width>
       <height>480</height>
      </rect>
