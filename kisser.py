@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'kisser.ui'
 #
-# Created: Sat Jun  9 19:35:28 2012
+# Created: Sun Jun 10 03:46:57 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -89,18 +89,11 @@ class Ui_MainWindow(object):
 "}"))
         self.webView.setUrl(QtCore.QUrl(_fromUtf8("about:blank")))
         self.webView.setObjectName(_fromUtf8("webView"))
-        self.label = QtGui.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(205, 830, 640, 480))
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setMinimumSize(QtCore.QSize(640, 480))
-        self.label.setMaximumSize(QtCore.QSize(640, 480))
-        self.label.setText(_fromUtf8(""))
-        self.label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
-        self.label.setObjectName(_fromUtf8("label"))
+        self.label_3 = QtGui.QLabel(self.centralwidget)
+        self.label_3.setGeometry(QtCore.QRect(205, 830, 640, 480))
+        self.label_3.setMinimumSize(QtCore.QSize(640, 480))
+        self.label_3.setMaximumSize(QtCore.QSize(640, 480))
+        self.label_3.setObjectName(_fromUtf8("label_3"))
         self.label_2 = QtGui.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(356, 1450, 338, 96))
         self.label_2.setMinimumSize(QtCore.QSize(338, 96))
@@ -153,6 +146,18 @@ class Ui_MainWindow(object):
         self.label_2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label_2.setMargin(22)
         self.label_2.setObjectName(_fromUtf8("label_2"))
+        self.label = QtGui.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(205, 830, 640, 480))
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
+        self.label.setMinimumSize(QtCore.QSize(640, 480))
+        self.label.setMaximumSize(QtCore.QSize(640, 480))
+        self.label.setText(_fromUtf8(""))
+        self.label.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.label.setObjectName(_fromUtf8("label"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.actionLoad = QtGui.QAction(MainWindow)
         self.actionLoad.setObjectName(_fromUtf8("actionLoad"))
@@ -162,6 +167,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Nivea Lips", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("MainWindow", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLoad.setText(QtGui.QApplication.translate("MainWindow", "load", None, QtGui.QApplication.UnicodeUTF8))
 
 from PyQt4 import QtWebKit

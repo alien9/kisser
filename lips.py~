@@ -8,7 +8,7 @@ import sys, os, re
 import thread
 import time
 from PyQt4 import QtCore, QtGui, QtWebKit
-from PyQt4.QtCore import Qt, SIGNAL, QEvent, QPoint, QSize, QUrl
+from PyQt4.QtCore import * #Qt, SIGNAL, QEvent, QPoint, QSize, QUrl, QByteArray, QMovie
 from kisser import Ui_MainWindow
 from PyQt4.QtGui import *
 from PIL import Image, ImageDraw
@@ -16,6 +16,7 @@ from PIL.ImageQt import ImageQt
 import barulho
 from choose import Ui_Dialog
 from subprocess import call
+from threading import Thread
 
 class StartSub2(QtGui.QDialog, Ui_Dialog):
     def __init__(self,parent=None):
@@ -43,7 +44,7 @@ class StartQT4(QtGui.QMainWindow):
         palette = page.palette()
         palette.setBrush(QtGui.QPalette.Base, Qt.transparent)
         page.setPalette(palette)
-        page.currentFrame().documentElement().setInnerXml("text")
+
         self.label = self.ui.label
         #values=self.sozinho()
         #self.trick()
@@ -51,11 +52,14 @@ class StartQT4(QtGui.QMainWindow):
         self.label.setScaledContents(True)
         self.setKinect(False)
         self.lazy=False
-
+        self.movie = QMovie("layout/contagem.gif", QByteArray())
+        self.movie.setCacheMode(QMovie.CacheAll) 
+        self.movie.setSpeed(100) 
+        
     def keyPressEvent(self, e):
         k=e.key()
         print e.key()
-        if k == QtCore.Qt.Key_Escape or k==16777227 or k==16777222 k==48: # ESC ou Zero ou Ins (Tecladinho)
+        if k == QtCore.Qt.Key_Escape or k==16777227 or k==16777222 or k==48: # ESC ou Zero ou Ins (Tecladinho) - pare tudo e volte 
             self.loop.stop()
             self.setKinect(False)
         if k==16777221 or k==16777220: # ENTER pergunta o que fazer
@@ -71,10 +75,16 @@ class StartQT4(QtGui.QMainWindow):
             self.loop.stop()
             self.trick(False)
         if k==32 or k==42: # '*' ou ESPACO, comece a disparar...
-            self.loop.wakeup()
             self.ui.label_2.setMinimumSize(QtCore.QSize(0, 96))
             self.ui.label_2.setMaximumSize(QtCore.QSize(0, 96))
             self.ui.label_2.setText("")
+            self.ui.label_3.setMovie(self.movie)
+            self.movie.start()
+            self.waitress=Wait()
+            self.connect(self.waitress,  QtCore.SIGNAL('detector()'),  self.detector)
+            self.waitress.start()
+    def detector(self):
+        self.loop.wakeup()
     def setKinect(self,kinect):
         self.lazy=False
         if kinect:
@@ -105,8 +115,8 @@ class StartQT4(QtGui.QMainWindow):
         if self.lazy:
             return
         pix=QPixmap.fromImage(pic)
-        
         self.label.setPixmap(pix)
+        self.ui.label_3.raise_()
     def trick(self, solo):
         storage = cv.CreateMemStorage()
 
@@ -141,6 +151,12 @@ class StartQT4(QtGui.QMainWindow):
         self.lazy=True
         self.label.setPixmap(QPixmap(tf))        
         #self.trick(True)
+class Wait(QtCore.QThread):
+    #def __init__(self, solo):
+    def run(self):
+        time.sleep(3)
+        self.emit(QtCore.SIGNAL('detector()'))
+
 class Loop(QtCore.QThread):
     def __init__(self, solo):
         self.solo=solo
@@ -209,13 +225,10 @@ class Loop(QtCore.QThread):
                     cv.Flip(grayscale, grayscale, 1)
                     faces = cv.HaarDetectObjects(grayscale, haar, storage, 1.1, 2, cv.CV_HAAR_DO_CANNY_PRUNING, (30, 30))
                     if faces:
-                        #draw=ImageDraw.Draw(image)
                         for face in faces:
                             if face[1] > threshold:
-                                #face=faces[0]
                                 r=face[0]
                                 cv.Circle(o, (int(640-r[0]-r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 50, 50), 3, 8, 0)
-                                #draw.rectangle((640-r[0]-r[2], r[1],  640-r[0], r[1]+r[3]), outline="yellow")
                                 right=(640-r[0]-r[2]/2, r[1]+r[3]/2)
                 else:
                     right=left
