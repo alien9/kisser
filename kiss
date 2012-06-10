@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd ~/kisser
+./lips.py
