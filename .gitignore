@@ -27,4 +27,4 @@ pip-log.txt
 .mr.developer.cfg
 
 # my stuff
-./output/*
+output/*
