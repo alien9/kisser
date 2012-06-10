@@ -32,7 +32,7 @@ class StartQT4(QtGui.QMainWindow):
         self.setWindowState(Qt.WindowFullScreen)
         self.setWindowIcon(QtGui.QIcon('logo.png'))
         self.ui.setupUi(self)
-        self.setStyleSheet("QMainWindow {font-size : 400px; color : blue; background-image: url('sistema_detecta_1680.jpg'); background-repeat:no-repeat;} \n QLabel#label_2 {background-image: url('boca.jpg')}");
+        self.setStyleSheet("QMainWindow {font-size : 400px; color : blue; background-image: url('sistema_detecta_1360.jpg'); background-repeat:no-repeat;} \n QLabel#label_2 {background-image: url('boca.jpg')}");
         webview=self.ui.webView
         websettings = webview.settings()
         websettings.setAttribute(QtWebKit.QWebSettings.PluginsEnabled,True)
@@ -146,8 +146,10 @@ class StartQT4(QtGui.QMainWindow):
             cv.SaveImage(tf,cc)
             time.sleep(1)
             barulho.toca("camera.mp3")
-        call(["eject","/dev/sr0"])
-        call(["eject","-t","/dev/sr0"])
+        #call(["eject","/dev/sr0"])
+        #call(["eject","-t","/dev/sr0"])
+        call(["eject","/dev/dvd1"])
+        call(["eject","-t","/dev/dvd1"])
         self.lazy=True
         self.label.setPixmap(QPixmap(tf))        
         #self.trick(True)
@@ -216,7 +218,7 @@ class Loop(QtCore.QThread):
                             #cv.Rectangle(o, ( int(r[0]), int(r[1])),
                             #         (int(r[0]+r[2]), int(r[1]+r[3])),
                             #         cv.RGB(0, 255, 0), 3, 8, 0)
-                            cv.Circle(o, (int(r[0]+r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 50, 50), 3, 8, 0)
+                            cv.Circle(o, (int(r[0]+r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 255, 255), 3, 8, 0)
                             #cv.EllipseBox(o, r, cv.RGB(0, 255, 0))
                             #draw.ellipse((r[0], r[1],  r[0]+r[2],  r[1]+r[3]), fill="green")
                             #draw.ellipse((r[0]+3, r[1]+3,  r[0]+r[2]-3,  r[1]+r[3]-3), fill=None)
@@ -228,7 +230,7 @@ class Loop(QtCore.QThread):
                         for face in faces:
                             if face[1] > threshold:
                                 r=face[0]
-                                cv.Circle(o, (int(640-r[0]-r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 50, 50), 3, 8, 0)
+                                cv.Circle(o, (int(640-r[0]-r[3]/2), int(r[1]+r[3]/2)),r[3]/2,cv.RGB(255, 255, 255), 3, 8, 0)
                                 right=(640-r[0]-r[2]/2, r[1]+r[3]/2)
                 else:
                     right=left

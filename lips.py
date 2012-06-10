@@ -32,7 +32,7 @@ class StartQT4(QtGui.QMainWindow):
         self.setWindowState(Qt.WindowFullScreen)
         self.setWindowIcon(QtGui.QIcon('logo.png'))
         self.ui.setupUi(self)
-        self.setStyleSheet("QMainWindow {font-size : 400px; color : blue; background-image: url('sistema_detecta_1680.jpg'); background-repeat:no-repeat;} \n QLabel#label_2 {background-image: url('boca.jpg')}");
+        self.setStyleSheet("QMainWindow {font-size : 400px; color : blue; background-image: url('sistema_detecta_1360.jpg'); background-repeat:no-repeat;} \n QLabel#label_2 {background-image: url('boca.jpg')}");
         webview=self.ui.webView
         websettings = webview.settings()
         websettings.setAttribute(QtWebKit.QWebSettings.PluginsEnabled,True)
@@ -66,15 +66,35 @@ class StartQT4(QtGui.QMainWindow):
             self.sozinho()
         if k==45: # '-', tira a foto sem cerimonias
             self.sarva(3)
-        if k==16777233 or k==49: #so - 1 no tecladinho
+        if k==43: # '+', entrega um batom sem nem perguntar nada
+            self.gospel()
+            
+        if k==47: # '/'  faz a foto com o countdown
+            self.fotenhu()
+        if k==16777233 or k==49: #so - 1 no tecladinho (apelao)
             self.setKinect(True)
             self.loop.stop()
             self.trick(True)
-        if k==16777237 or k==50: #acompanhado- 2 no tecladinho
+            self.detector(True)
+        if k==16777237 or k==50: #acompanhado- 2 no tecladinho (apelao)
             self.setKinect(True)
             self.loop.stop()
             self.trick(False)
+            self.detector(True)
+        if k==52 or k==16777234: # 4 sozinho  SEM APELAO
+            self.setKinect(True)
+            self.loop.stop()
+            self.trick(True)
+            self.detector(False)
+        if k==16777227 or k==53: #acompanhado- 5 no tecladinho sem apelao
+            self.setKinect(True)
+            self.loop.stop()
+            self.trick(False)
+            self.detector(False)
+            
         if k==32 or k==42: # '*' ou ESPACO, comece a disparar...
+            self.detector()
+            """
             self.ui.label_2.setMinimumSize(QtCore.QSize(0, 96))
             self.ui.label_2.setMaximumSize(QtCore.QSize(0, 96))
             self.ui.label_2.setText("")
@@ -83,8 +103,29 @@ class StartQT4(QtGui.QMainWindow):
             self.waitress=Wait()
             self.connect(self.waitress,  QtCore.SIGNAL('detector()'),  self.detector)
             self.waitress.start()
-    def detector(self):
+            """
+    def acorda(self):
+        self.loop.paranoize()
+    def fotenhu(self): #para o detector e tira foto mostrando countdown
+        self.loop.stop()
+        self.countdown()
+    def detector(self, apelao=False): #apelao vai ignorar as mensagens do detector e fazer a foto via timeout
         self.loop.wakeup()
+        if apelao:
+            self.wu=Wait(7)
+            self.connect(self.wu,  QtCore.SIGNAL('detector()'),  self.fotenhu)
+            self.wu.start()
+        else:
+            self.loop.paranoize()
+    def countdown(self):
+        self.ui.label_2.setMinimumSize(QtCore.QSize(0, 96))
+        self.ui.label_2.setMaximumSize(QtCore.QSize(0, 96))
+        self.ui.label_2.setText("")
+        self.ui.label_3.setMovie(self.movie)
+        self.movie.start()
+        self.counter=Wait(4)
+        self.connect(self.counter,  QtCore.SIGNAL('detector()'),  self.sarva)
+        self.counter.start()
     def setKinect(self,kinect):
         self.lazy=False
         if kinect:
@@ -123,7 +164,7 @@ class StartQT4(QtGui.QMainWindow):
         haar=cv.Load('haarcascades/haarcascade_profileface.xml')
         self.loop=Loop(solo)
         self.connect(self.loop,  QtCore.SIGNAL('update(QImage)'),  self.update)
-        self.connect(self.loop,  QtCore.SIGNAL('save()'),  self.sarva)
+        self.connect(self.loop,  QtCore.SIGNAL('save()'),  self.countdown)
         self.loop.start()
     def sarva(self,veces=3):
         self.loop.stop()
@@ -136,25 +177,33 @@ class StartQT4(QtGui.QMainWindow):
             s=re.search("_(\d+)_", files[len(files)-1])
             if s:
                 u=1+int(s.group(1))
-        self.ui.label_2.setText(str('%07d' % u))
-        self.ui.label_2.setMinimumSize(QtCore.QSize(338, 96))
-        self.ui.label_2.setMaximumSize(QtCore.QSize(338, 96))
         tf=""
+        showtime=None
         for i in range(0,veces):
             cc = cv.QueryFrame(capture)
             tf="output/photo_"+str('%05d' % u)+"_"+str(int(time.time()))+".png"
+            if not showtime:
+                showtime=tf
             cv.SaveImage(tf,cc)
             time.sleep(1)
             barulho.toca("camera.mp3")
-        call(["eject","/dev/sr0"])
-        call(["eject","-t","/dev/sr0"])
+        self.setKinect(True)
+        self.ui.label_2.setText(str('%07d' % u))
+        self.ui.label_2.setMinimumSize(QtCore.QSize(338, 96))
+        self.ui.label_2.setMaximumSize(QtCore.QSize(338, 96))
         self.lazy=True
-        self.label.setPixmap(QPixmap(tf))        
-        #self.trick(True)
+        self.label.setPixmap(QPixmap(showtime))
+        self.gospel()
+    def gospel(self):
+        call(["eject","/dev/dvd1"])
+        call(["eject","/dev/dvd1"])
 class Wait(QtCore.QThread):
-    #def __init__(self, solo):
+    def __init__(self, q=3):
+        print "iniciou com "+str(q)
+        self.quanto=q
+        QtCore.QThread.__init__(self)
     def run(self):
-        time.sleep(3)
+        time.sleep(self.quanto)
         self.emit(QtCore.SIGNAL('detector()'))
 
 class Loop(QtCore.QThread):
@@ -165,6 +214,7 @@ class Loop(QtCore.QThread):
         self.rgb=None
         self.dep=None
         self.online=False
+        self.paranoic=False
     def stop(self):
         self._stop = True
     def refresh(self, a, b):
@@ -172,6 +222,8 @@ class Loop(QtCore.QThread):
         self.dep=b
     def wakeup(self):
         self.online=True
+    def paranoize(self):
+        self.paranoic=True
     def run(self):
         heat=0
         storage = cv.CreateMemStorage()
@@ -183,9 +235,6 @@ class Loop(QtCore.QThread):
         while not self._stop:
             # Get a fresh framepython
             (depth,_), (rgb,_) = get_depth(), get_video()
-            
-            #if self.dep and self.rgb:
-        
             #image=array2PIL(rgb, (640, 480))
             
             #o=rgb.astype(numpy.uint8)
@@ -195,7 +244,6 @@ class Loop(QtCore.QThread):
                 grayscale = cv.CreateImage((640,  480), 8, 1)
                 cv.CvtColor(o, grayscale, cv.CV_BGR2GRAY)
                 storage = cv.CreateMemStorage(0)
-                #cv.ClearMemStorage(storage)
                 # equalize histogram
                 cv.EqualizeHist(grayscale, grayscale)
                 
@@ -205,9 +253,8 @@ class Loop(QtCore.QThread):
                 if self.solo:
                     threshold=20
                 if faces:
-                    #draw=ImageDraw.Draw(image)
                     for face in faces:
-                        print "FORCE "+str(face[1])
+                        #print "FORCE "+str(face[1])
                         if face[1] > threshold:
                         #face=faces[0]
                             r=face[0]
@@ -232,12 +279,12 @@ class Loop(QtCore.QThread):
                                 right=(640-r[0]-r[2]/2, r[1]+r[3]/2)
                 else:
                     right=left
-                if left and right:
+                if left and right and self.paranoic:
                     #print "distancia esquerda:"
                     #print w[left[1]][left[0]]
                     #print "distancia direita:"
                     #print w[right[1]][right[0]]
-                    print heat
+                    #print heat
                     print str(w[left[1]][left[0]]) + "_"+ str(w[right[1]][right[0]])
                     if w[left[1]][left[0]] - w[right[1]][right[0]] < 50:
                         heat+=1
@@ -250,6 +297,8 @@ class Loop(QtCore.QThread):
                     heat-=1
                 if heat<0:
                     heat=0
+            cv.Flip(o,o,1)
+
             qi=toQImage(numpy.asarray(o),True) #array2PIL(rgb, (640, 480))
             #qi=ImageQt(image.transpose(Image.FLIP_LEFT_RIGHT)) #PILimageToQImage(image)
             self.emit(QtCore.SIGNAL('update(QImage)'), qi)
