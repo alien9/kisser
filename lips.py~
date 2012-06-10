@@ -265,11 +265,3 @@ if __name__ == "__main__":
     
 
 
-"""
-IPython usage:
- ipython
- [1]: run -i demo_freenect
- #<ctrl -c>  (to interrupt the loop)
- [2]: %timeit -n100 get_depth(), get_rgb() # profile the kinect capture
-
-"""

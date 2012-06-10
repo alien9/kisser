@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'kisser.ui'
 #
-# Created: Sun Jun 10 03:46:57 2012
+# Created: Sun Jun 10 05:59:47 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -93,6 +93,7 @@ class Ui_MainWindow(object):
         self.label_3.setGeometry(QtCore.QRect(205, 830, 640, 480))
         self.label_3.setMinimumSize(QtCore.QSize(640, 480))
         self.label_3.setMaximumSize(QtCore.QSize(640, 480))
+        self.label_3.setText(_fromUtf8(""))
         self.label_3.setObjectName(_fromUtf8("label_3"))
         self.label_2 = QtGui.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(356, 1450, 338, 96))
@@ -167,7 +168,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Nivea Lips", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("MainWindow", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLoad.setText(QtGui.QApplication.translate("MainWindow", "load", None, QtGui.QApplication.UnicodeUTF8))
 
 from PyQt4 import QtWebKit
