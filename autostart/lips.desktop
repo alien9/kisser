@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/tiago/./kiss
+Hidden=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=NiveaLips
+Name=NiveaLips
+Comment[en_US]=nivea lips
+Comment=nivea lips
