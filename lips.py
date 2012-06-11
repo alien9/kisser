@@ -17,7 +17,9 @@ import barulho
 from choose import Ui_Dialog
 from subprocess import call
 from threading import Thread
-
+class Beep(Thread):
+   def run(self):
+      barulho.toca("beep.mp3")
 class StartSub2(QtGui.QDialog, Ui_Dialog):
     def __init__(self,parent=None):
         QtGui.QDialog.__init__(self,parent)
@@ -117,7 +119,7 @@ class StartQT4(QtGui.QMainWindow):
     def acorda(self):
         self.loop.paranoize()
     def fotenhu(self): #para o detector e tira foto mostrando countdown
-        self.loop.stop()
+        self.loop.disconnect()
         self.countdown()
     def detector(self, apelao=False, delay=7): #apelao vai ignorar as mensagens do detector e fazer a foto via timeout
         self.loop.wakeup()
@@ -132,6 +134,8 @@ class StartQT4(QtGui.QMainWindow):
         self.ui.label_2.setMaximumSize(QtCore.QSize(0, 96))
         self.ui.label_2.setText("")
         self.ui.label_3.setMovie(self.movie)
+        boo=Beep()
+        boo.start()
         self.movie.start()
         self.counter=Wait(4)
         self.connect(self.counter,  QtCore.SIGNAL('detector()'),  self.sarva)
@@ -204,6 +208,7 @@ class StartQT4(QtGui.QMainWindow):
         self.ui.label_2.setMaximumSize(QtCore.QSize(338, 96))
         self.lazy=True
         self.label.setPixmap(QPixmap(showtime))
+        self.loop.stop()
         self.gospel()
     def gospel(self):
         call(["eject","/dev/dvd1"])
@@ -228,6 +233,8 @@ class Loop(QtCore.QThread):
         self.paranoic=False
     def stop(self):
         self._stop = True
+    def disconnect(self):
+        self.online=False
     def refresh(self, a, b):
         self.rgb=a
         self.dep=b
