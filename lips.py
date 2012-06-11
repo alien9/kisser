@@ -75,12 +75,22 @@ class StartQT4(QtGui.QMainWindow):
             self.setKinect(True)
             self.loop.stop()
             self.trick(True)
-            self.detector(True)
+            self.detector(True,4)
         if k==16777237 or k==50: #acompanhado- 2 no tecladinho (apelao)
             self.setKinect(True)
             self.loop.stop()
             self.trick(False)
-            self.detector(True)
+            self.detector(True,4)
+        if k==16777232 or k==55: #so - 7 no tecladinho (apelao mais lento)
+            self.setKinect(True)
+            self.loop.stop()
+            self.trick(True)
+            self.detector(True,7)
+        if k==16777235 or k==56: #acompanhado- 8 no tecladinho (apelao mais lento)
+            self.setKinect(True)
+            self.loop.stop()
+            self.trick(False)
+            self.detector(True,7)
         if k==52 or k==16777234: # 4 sozinho  SEM APELAO
             self.setKinect(True)
             self.loop.stop()
@@ -109,10 +119,10 @@ class StartQT4(QtGui.QMainWindow):
     def fotenhu(self): #para o detector e tira foto mostrando countdown
         self.loop.stop()
         self.countdown()
-    def detector(self, apelao=False): #apelao vai ignorar as mensagens do detector e fazer a foto via timeout
+    def detector(self, apelao=False, delay=7): #apelao vai ignorar as mensagens do detector e fazer a foto via timeout
         self.loop.wakeup()
         if apelao:
-            self.wu=Wait(7)
+            self.wu=Wait(delay)
             self.connect(self.wu,  QtCore.SIGNAL('detector()'),  self.fotenhu)
             self.wu.start()
         else:
