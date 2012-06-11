@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=/home/tiago/kisser/logo.jpg
+Name[en_US]=NIvea Lips
+Exec=/home/tiago/kiss
+Name=NIvea Lips
+Icon=/home/tiago/kisser/logo.jpg
