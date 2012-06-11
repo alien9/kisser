@@ -182,28 +182,23 @@ class StartQT4(QtGui.QMainWindow):
         self.connect(self.loop,  QtCore.SIGNAL('save()'),  self.countdown)
         self.loop.start()
     def sarva(self,veces=3):
-        self.loop.stop()
-        time.sleep(1)
-        capture = cv.CaptureFromCAM(0)
+        #self.loop.stop()
+        #time.sleep(1)
+        
         files=os.listdir("output/")
         files.sort()
         u=0
         if len(files) > 0:
             s=re.search("_(\d+)_", files[len(files)-1])
             if s:
-                u=1+int(s.group(1))
-        tf=""
-        showtime=None
-        for i in range(0,veces):
-            cc = cv.QueryFrame(capture)
-            tf="output/photo_"+str('%05d' % u)+"_"+str(int(time.time()))+".png"
-            if not showtime:
-                showtime=tf
-            cv.SaveImage(tf,cc)
-            time.sleep(1)
-            barulho.toca("camera.mp3")
+                self.number=1+int(s.group(1))
+        self.photographer=Photo(self.number, veces)
+        self.connect(self.photographer,  QtCore.SIGNAL('postsave(QString)'),  self.postsave)
+        self.photographer.start()
+            
+    def postsave(self, showtime):
         self.setKinect(True)
-        self.ui.label_2.setText(str('%07d' % u))
+        self.ui.label_2.setText(str('%07d' % self.number))
         self.ui.label_2.setMinimumSize(QtCore.QSize(338, 96))
         self.ui.label_2.setMaximumSize(QtCore.QSize(338, 96))
         self.lazy=True
@@ -213,6 +208,25 @@ class StartQT4(QtGui.QMainWindow):
     def gospel(self):
         call(["eject","/dev/dvd1"])
         call(["eject","/dev/dvd1"])
+class Photo(QtCore.QThread):
+    def __init__(self, numbero, veces=3):
+        self.n=numbero
+        self.veces=veces
+        QtCore.QThread.__init__(self)
+    def run(self):
+        capture = cv.CaptureFromCAM(0)
+        tf=""
+        showtime=None
+        for i in range(0,self.veces):
+            cc = cv.QueryFrame(capture)
+            tf="output/photo_"+str('%05d' % self.n)+"_"+str(int(time.time()))+".png"
+            if not showtime:
+                showtime=tf
+            cv.SaveImage(tf,cc)
+            time.sleep(1)
+            barulho.toca("camera.mp3") 
+        self.emit(QtCore.SIGNAL('postsave(QString)'), tf)
+
 class Wait(QtCore.QThread):
     def __init__(self, q=3):
         print "iniciou com "+str(q)
@@ -310,7 +324,7 @@ class Loop(QtCore.QThread):
                             heat+=10
                         if heat>10:
                             self.emit(QtCore.SIGNAL('save()'))
-                            return
+                            self.disconnect()
                 else:
                     heat-=1
                 if heat<0:
